@@ -93,8 +93,8 @@
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-100% / 3)); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(calc(-100% / 3), 0, 0); }
 }
 
 .scroller::-webkit-scrollbar {
