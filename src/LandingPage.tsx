@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, MotionValue, AnimatePresence, useInView, animate } from 'motion/react';
 import { Instagram, Linkedin, Twitter, ChevronLeft, ChevronRight, Quote, MessageCircle, Check, ShieldAlert, Terminal, CheckCircle2, AlertTriangle, Zap, Server, Menu, X, Github, Send, ArrowRight, Star, Plus, Minus, Info, Target, Flame, Gem, Network, Cpu, Globe, Mic, Camera } from 'lucide-react';
 import Hls from 'hls.js';
@@ -231,18 +232,14 @@ const Navbar = () => {
               <motion.a whileHover={{ scale: 1.05, color: "var(--foreground)" }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 10 }} href="https://t.me/smoken" target="_blank" rel="noreferrer" className="transition-colors">Contact</motion.a>
             </div>
             
-            <motion.a 
-              href="#pricing"
-              onClick={(e) => scrollToSection(e, 'pricing')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.94 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            <Link 
+              to="/anmixai"
               className="liquid-glass px-5 h-[40px] rounded-full flex items-center justify-center gap-2 text-sm font-semibold relative overflow-hidden group border border-white/10"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <Terminal className="w-4 h-4 relative z-10" />
               <span className="relative z-10">Get Started</span>
-            </motion.a>
+            </Link>
           </div>
         </motion.nav>
       </div>
@@ -272,15 +269,15 @@ const Navbar = () => {
               <a href="https://t.me/smoken" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Contact</a>
             </div>
             
-            <a 
-              href="#pricing"
-              onClick={(e) => { setMobileMenuOpen(false); scrollToSection(e, 'pricing'); }}
+            <Link 
+              to="/anmixai"
+              onClick={() => setMobileMenuOpen(false)}
               className="liquid-glass w-full py-3 mt-2 rounded-[12px] flex items-center justify-center gap-2 text-foreground font-semibold relative overflow-hidden group"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <Terminal className="w-5 h-5 relative z-10" />
               <span className="relative z-10">Get Started</span>
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
@@ -321,11 +318,8 @@ const HeroSection = () => {
         </motion.p>
 
         <motion.div {...fadeUp(0.4)} className="flex flex-col sm:flex-row items-center gap-4 mt-8 w-full justify-center max-w-[500px]">
-          <motion.a
-            href="#features"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          <Link
+            to="/anmixai"
             className="w-full sm:w-auto flex items-center justify-center gap-2 liquid-glass border border-white/10 px-10 py-4 md:py-5 rounded-full font-semibold text-[15px] text-foreground hover:bg-white/5 backdrop-blur-xl transition-all overflow-hidden relative group shadow-[0_0_20px_rgba(255,255,255,0.02)] hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] z-10"
           >
             <motion.div 
@@ -336,7 +330,7 @@ const HeroSection = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <span className="relative z-10">Get Started</span>
             <ArrowRight className="w-5 h-5 relative z-10" />
-          </motion.a>
+          </Link>
         </motion.div>
       </div>
     </section>
@@ -929,13 +923,10 @@ const PricingSection = () => {
               ))}
             </ul>
             
-            <motion.a 
-              href="#pricing"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            <Link 
+              to="/anmixai"
               className={cn(
-                "w-full py-4 rounded-[12px] font-semibold text-center mt-auto border transition-all relative overflow-hidden group/btn z-10 liquid-glass backdrop-blur-xl hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]",
+                "w-full py-4 rounded-[12px] font-semibold text-center mt-auto border transition-all relative overflow-hidden group/btn z-10 liquid-glass backdrop-blur-xl hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] block",
                 plan.popular ? "bg-white/[0.08] hover:bg-white/[0.12] border-white/20 text-foreground" : "bg-white/[0.02] border-white/10 text-foreground"
               )}
             >
@@ -945,7 +936,7 @@ const PricingSection = () => {
                 transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
               />
               <span className="relative z-10">{plan.priceNum === 0 ? "Start For Free" : "Upgrade Plan"}</span>
-            </motion.a>
+            </Link>
           </motion.div>
         ))}
       </div>
@@ -1218,12 +1209,9 @@ const AboutSection = () => {
             Join FyoiaAi right now — it's completely free to begin, requires no credit card, and gives you instant access to powerful tools that help you generate text, code, images, videos, and voice content with amazing speed.
           </p>
           
-          <motion.a 
-            href="#pricing"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            className="relative z-10 flex items-center justify-center gap-2 liquid-glass border border-white/10 text-foreground px-10 py-5 rounded-full font-bold text-[16px] shadow-[0_0_20px_rgba(255,255,255,0.02)] hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:bg-white/5 transition-all overflow-hidden group/btn"
+          <Link 
+            to="/anmixai"
+            className="relative z-10 flex items-center justify-center gap-2 liquid-glass border border-white/10 text-foreground px-10 py-5 rounded-full font-bold text-[16px] shadow-[0_0_20px_rgba(255,255,255,0.02)] hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:bg-white/5 transition-all overflow-hidden group/btn inline-flex"
           >
              <motion.div 
                className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/[0.15] to-transparent -translate-x-full pointer-events-none"
@@ -1232,7 +1220,7 @@ const AboutSection = () => {
              />
              <span className="relative z-10">Start Creating for Free</span>
              <ChevronRight className="w-5 h-5 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
-          </motion.a>
+          </Link>
         </motion.div>
       </div>
     </section>
