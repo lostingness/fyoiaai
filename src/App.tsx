@@ -134,7 +134,7 @@ const HlsVideo = ({ src, className, autoPlay, ...props }: React.VideoHTMLAttribu
 };
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [navState, setNavState] = useState<'top' | 'compact' | 'expanded'>('top');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => {
@@ -151,11 +151,23 @@ const Navbar = () => {
   };
   
   useEffect(() => {
+    let lastScrollY = window.scrollY;
     let ticking = false;
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 20);
+          const currentScrollY = window.scrollY;
+          
+          if (currentScrollY < 20) {
+            setNavState('top');
+          } else if (currentScrollY > 50 && currentScrollY > lastScrollY) {
+            setNavState('compact');
+          } else if (currentScrollY < lastScrollY) {
+            setNavState('expanded');
+          }
+          
+          lastScrollY = currentScrollY;
           ticking = false;
         });
         ticking = true;
@@ -169,19 +181,30 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Helper to determine the classes based on navState and mobileMenuOpen
+  const getNavClasses = () => {
+    const baseClasses = "pointer-events-auto flex items-center justify-between transition-all duration-500";
+    
+    if (mobileMenuOpen || navState === 'expanded') {
+      return `${baseClasses} bg-background/80 backdrop-blur-[20px] border border-white/10 shadow-[0_8px_32px_rgba(255,255,255,0.02)] rounded-[32px] px-4 md:px-10 py-3 w-full max-w-7xl`;
+    }
+    
+    if (navState === 'compact') {
+      return `${baseClasses} bg-background/70 backdrop-blur-[20px] border border-white/10 shadow-[0_8px_32px_rgba(255,255,255,0.02)] rounded-[24px] px-4 md:px-6 py-2.5 w-full max-w-[800px] md:max-w-[700px]`;
+    }
+    
+    // Default 'top'
+    return `${baseClasses} bg-transparent border border-transparent rounded-[32px] px-2 md:px-12 py-3 w-full max-w-7xl`;
+  };
+
   return (
     <>
-      <div className="fixed top-0 inset-x-0 z-50 flex justify-center w-full px-4 pt-4 md:pt-6 pointer-events-none transition-all">
+      <div className="fixed top-0 inset-x-0 z-50 flex justify-center w-full px-4 pt-4 md:pt-6 pointer-events-none transition-all duration-500 ease-in-out">
         <motion.nav 
           initial={{ y: -100 }}
           animate={{ y: 0 }}
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          className={cn(
-            "pointer-events-auto flex items-center justify-between transition-all duration-500",
-            scrolled || mobileMenuOpen 
-              ? "bg-background/70 backdrop-blur-[20px] border border-white/10 shadow-[0_8px_32px_rgba(255,255,255,0.02)] rounded-[24px] px-4 md:px-6 py-3 w-full max-w-[800px]" 
-              : "bg-transparent border border-transparent rounded-[32px] px-2 md:px-12 py-2 w-full max-w-7xl"
-          )}
+          className={getNavClasses()}
         >
           <div className="flex items-center gap-[10px] md:gap-[12px]">
             <Logo className="w-6 h-6 md:w-8 md:h-8 text-foreground" />
@@ -224,11 +247,11 @@ const Navbar = () => {
         </motion.nav>
       </div>
 
-      {scrolled && (
+      {navState !== 'top' && (
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed top-[70px] md:top-[85px] left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[1px] z-40 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.5)] animate-pulse"
+          className="fixed top-[75px] md:top-[85px] left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[1px] z-40 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.5)] animate-pulse"
         />
       )}
 
@@ -279,7 +302,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-black/50 z-[1] pointer-events-none" />
       <div className="absolute bottom-0 w-full h-60 bg-gradient-to-t from-[#020202] via-background/80 to-transparent z-[2] pointer-events-none" />
       
-      <div className="relative z-10 px-4 md:px-8 mt-12 flex flex-col items-center max-w-[900px] w-full">
+      <div className="relative z-10 px-4 md:px-8 mt-12 flex flex-col items-center max-w-[1200px] w-full">
         <motion.div {...fadeUp(0.1)} className="flex items-center gap-[12px] mb-[24px]">
           <div className="inline-flex items-center gap-2 liquid-glass rounded-full px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-white/5">
             <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"></span>
@@ -289,8 +312,8 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
-        <motion.h1 {...fadeUp(0.2)} className="text-[clamp(44px,8vw,80px)] leading-[0.95] tracking-[-2px] md:tracking-[-3px] font-medium mb-[24px]">
-          Build, Create & Automate with <br className="hidden md:block"/> <span className="font-serif italic font-normal bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50">FyoiaAi</span>
+        <motion.h1 {...fadeUp(0.2)} className="text-[clamp(40px,7vw,76px)] leading-[1.05] tracking-[-2px] md:tracking-[-3px] font-medium mb-[24px] w-full max-w-[1100px] mx-auto text-center px-2">
+          Build, Create & Automate <br className="hidden md:block"/> with <span className="font-serif italic font-normal bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50">FyoiaAi</span>
         </motion.h1>
 
         <motion.p {...fadeUp(0.3)} className="text-[16px] md:text-[20px] leading-[1.6] md:leading-[1.5] text-hero-subtitle max-w-[680px] mb-[40px] font-medium px-2">
