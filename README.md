@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🚀 FyoiaAi
+<img src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:0f172a,50:111827,100:020617&text=FyoiaAi&fontColor=ffffff&fontSize=46&fontAlignY=38&desc=Build%20%7C%20Create%20%7C%20Automate&descAlignY=58&animation=fadeIn" alt="FyoiaAi Banner" />
+
+# FyoiaAi
 
 ### Multi-model AI platform experience for chat, creation, automation, and media workflows.
 
@@ -14,7 +16,6 @@
 
 <p>
   <a href="https://github.com/lostingness"><img src="https://img.shields.io/badge/GitHub-lostingness-181717?style=flat-square&logo=github" alt="GitHub" /></a>
-  <a href="https://fyoiaai.vercel.app"><img src="https://img.shields.io/badge/Live%20Demo-fyoiaai.vercel.app-000000?style=flat-square&logo=vercel&logoColor=white" alt="Live Demo" /></a>
   <a href="https://lostingness.site"><img src="https://img.shields.io/badge/Website-lostingness.site-0f172a?style=flat-square&logo=googlechrome&logoColor=white" alt="Website" /></a>
   <a href="https://www.instagram.com/lostingness"><img src="https://img.shields.io/badge/Instagram-@lostingness-E4405F?style=flat-square&logo=instagram&logoColor=white" alt="Instagram" /></a>
 </p>
@@ -23,75 +24,87 @@
 
 ---
 
-## 🧠 Overview
+## Overview
 
-**FyoiaAi** is a premium AI-style frontend experience built to showcase a modern multi-model product interface for chat, creation, automation, and media workflows.
+**FyoiaAi** is a premium AI-style frontend experience built to present a modern multi-model platform with a polished, conversion-focused landing page. The current codebase is centered around visual presentation, motion, and brand positioning rather than a required backend setup.
 
-This project focuses on:
+This project is designed for:
 
-- premium landing page presentation
-- smooth motion and transitions
-- modern responsive UI
-- fast local development
-- clean component-driven structure
-- ready-to-brand frontend architecture
-
-It is ideal for showcasing an AI product, SaaS concept, startup landing page, or futuristic web experience.
+- premium SaaS-style landing pages
+- modern AI product presentation
+- smooth animations and scroll interactions
+- responsive layouts across devices
+- fast local development with Vite
+- easy branding, editing, and redeployment
 
 ---
 
-## 🌐 Live Demo
+## Live Links
 
-- **Deploy Link:** [https://fyoiaai.vercel.app](https://fyoiaai.vercel.app)
-- **Platform:** Vercel
-- **Status:** Live
+- **Production URL:** `https://fyoia.app`
+- **Canonical live site:** `https://www.fyoia.app/`
+- **Local development:** `http://localhost:3000`
+- **Local production preview:** usually available after `npm run preview` in the terminal output
 
----
-
-## ✨ Highlights
-
-- Multi-model AI platform style UI
-- Premium hero section with polished motion
-- Responsive navbar and landing page layout
-- Pricing, testimonials, FAQ, and feature sections
-- Fast frontend setup with Vite
-- Type-safe structure using TypeScript
-- Ready for branding, customization, and deployment
+> `https://fyoia.app` currently redirects to `https://www.fyoia.app/`, and the live site resolves with the title **“FyoiaAi - Build, Create & Automate.”**
 
 ---
 
-## 🧰 Tech Stack
+## Highlights
+
+- Premium hero section with motion-based UI
+- Modern responsive navbar and landing layout
+- Pricing, feature, testimonial, and FAQ style sections
+- Vite-powered frontend workflow
+- TypeScript-based structure
+- Tailwind-powered styling pipeline
+- HLS video support
+- Clean reusable utility structure
+- Easy to customize for a personal brand, SaaS product, AI tool, or agency landing page
+
+---
+
+## Tech Stack
 
 <p>
-  <img src="https://skillicons.dev/icons?i=react,ts,vite,tailwind,nodejs" alt="Tech Stack Icons" />
+  <img src="https://skillicons.dev/icons?i=react,ts,vite,tailwind,nodejs,express" alt="Tech Stack Icons" />
 </p>
 
-**Core stack:**
+**Core stack used in the repo:**
 
-- React
+- React 19
 - TypeScript
 - Vite
-- Tailwind CSS
+- Tailwind CSS v4
 - Motion
 - Lucide React
-- Express support in dependencies
+- HLS.js
+- Express
+- clsx + tailwind-merge
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```bash
 fyoiaai-main/
 ├── app/
 │   └── applet/
+│       ├── dump.js
+│       ├── test-icons.js
+│       └── test.js
 ├── src/
 │   ├── App.tsx
 │   ├── Spiral.jsx
 │   ├── index.css
 │   ├── main.tsx
 │   └── lib/
-├── public/
+│       └── utils.ts
+├── .env.example
+├── .gitignore
+├── download.js
 ├── index.html
+├── metadata.json
 ├── package.json
 ├── tsconfig.json
 └── vite.config.ts
@@ -99,7 +112,31 @@ fyoiaai-main/
 
 ---
 
-## 📦 Installation
+## Features Included
+
+Based on the current repository structure and source files, this project includes or is organized for:
+
+- AI landing page presentation
+- motion-heavy UI sections
+- animated visual components
+- navbar with responsive interactions
+- section-based homepage flow
+- video/media-ready frontend setup
+- utility-based class merging
+- easy expansion for future API or backend integrations
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- **Node.js** 18 or later
+- **npm** or another compatible package manager
+
+---
 
 ### 1) Clone the repository
 
@@ -107,6 +144,10 @@ fyoiaai-main/
 git clone https://github.com/lostingness/fyoiaai.git
 cd fyoiaai
 ```
+
+> If your repository name is different, replace `fyoiaai` with your actual repo folder name.
+
+---
 
 ### 2) Install dependencies
 
@@ -116,130 +157,145 @@ npm install
 
 ---
 
-## ▶️ Run Locally
-
-This project uses a custom Vite dev script configured to run on **port 3000**.
+### 3) Run locally
 
 ```bash
 npm run dev
 ```
 
-Now open:
+The current repo is configured to start the Vite dev server on:
 
 ```bash
 http://localhost:3000
 ```
 
-If you are on the same local network and want to test on another device, the dev server is configured with host access enabled.
-
 ---
 
-## 🏗️ Build for Production
+### 4) Build for production
 
 ```bash
 npm run build
 ```
 
-This creates the production-ready output inside the `dist` folder.
+This creates the optimized production build inside the output directory.
 
 ---
 
-## 👀 Preview the Production Build Locally
-
-After building the app, run:
+### 5) Preview the production build locally
 
 ```bash
 npm run preview
 ```
 
-Then open the preview server in your browser.
-
-Typical Vite preview URL:
-
-```bash
-http://localhost:4173
-```
-
-> Note: the preview port may vary if that port is already in use.
+Vite will print the local preview URL in your terminal when the preview server starts.
 
 ---
 
-## 📜 Available Scripts
+## Available Scripts
 
 ```bash
-npm run dev      # Start local development server on port 3000
-npm run build    # Create production build
+npm run dev      # Start local dev server on port 3000
+npm run build    # Build project for production
 npm run preview  # Preview production build locally
-npm run clean    # Remove dist folder
-npm run lint     # Run TypeScript type check
+npm run clean    # Remove dist output
+npm run lint     # Run TypeScript noEmit check
 ```
 
 ---
 
-## 🎨 Customization
+## No API / No .env Requirement for Basic Frontend Use
 
-You can customize this project easily for your own brand or product.
+For the current public-facing frontend experience, you can work on the UI without setting up any API key or `.env` file first.
 
-### Main files to edit
+That means you can:
 
-```bash
-src/App.tsx
-src/Spiral.jsx
-src/index.css
-src/lib/
-```
+- install dependencies
+- run the site locally
+- edit the design
+- update branding and content
+- build and deploy the frontend
 
-### Recommended things to customize
+If you later connect real AI providers, server logic, or external services, you can add environment variables at that stage.
+
+---
+
+## Files You’ll Most Likely Edit
+
+These are the main places to customize the project:
+
+- `src/App.tsx` → primary landing page sections and content
+- `src/index.css` → global styles and visual tuning
+- `src/Spiral.jsx` → visual/animated component behavior
+- `src/lib/utils.ts` → utility helpers
+- `metadata.json` → project metadata
+- `index.html` → document head / root shell
+
+---
+
+## Customization Ideas
+
+You can easily turn this repo into:
+
+- an AI SaaS landing page
+- a startup product site
+- an agency brand website
+- a personal portfolio with premium UI
+- a waitlist / product launch page
+- a creator or automation tool landing page
+
+Recommended edits:
 
 - brand name
-- hero section copy
-- pricing plans
-- testimonials
+- logo
+- hero copy
+- CTA buttons
+- pricing content
 - FAQ content
-- colors and typography
-- animations and section spacing
-- navigation links
-- call-to-action buttons
+- section order
+- colors and gradients
+- animation intensity
+- contact links and socials
 
 ---
 
-## 🚀 Deployment
+## Deploying the Project
 
-This project can be deployed easily on:
+You can deploy this project on:
 
 - **Vercel**
 - **Netlify**
 - **Render**
-- **Any static hosting that supports Vite builds**
+- **Cloudflare Pages**
+- **any static hosting that supports Vite output**
 
-### Vercel deployment flow
-
-1. Push your code to GitHub
-2. Import the repository into Vercel
-3. Keep the default framework detection for Vite
-4. Deploy
-
-### Build settings
+### Standard deployment flow
 
 ```bash
-Build Command: npm run build
-Output Directory: dist
+npm install
+npm run build
+```
+
+Then deploy the generated build output using your preferred hosting platform.
+
+### Domain already in use
+
+If this repo is tied to your live product domain, use:
+
+```bash
+https://fyoia.app
+```
+
+For a direct canonical version:
+
+```bash
+https://www.fyoia.app/
 ```
 
 ---
 
-## 🔗 Important Links
+## Preview Assets
 
-- **Live Site:** [https://fyoiaai.vercel.app](https://fyoiaai.vercel.app)
-- **GitHub Profile:** [https://github.com/lostingness](https://github.com/lostingness)
-- **Website:** [https://lostingness.site](https://lostingness.site)
-- **Instagram:** [https://instagram.com/lostingness](https://instagram.com/lostingness)
-
----
-
-## 🖼️ Preview Section
-
-Add your own screenshots like this:
+If you want the README to look even stronger publicly, add preview screenshots or GIFs inside your repo and place them here:
 
 ```md
 ## Preview
@@ -247,52 +303,52 @@ Add your own screenshots like this:
 ![Homepage Preview](./public/preview.png)
 ```
 
-You can also replace it with a GIF, banner, or uploaded GitHub asset.
+You can also use a hosted banner image or product mockup.
 
 ---
 
-## 🔒 Public Repo Notes
+## Public Repo Notes
 
 If this repository is public, it is recommended to:
 
-- never push secrets or private config files
-- keep production credentials hidden
-- add a license file
-- replace placeholder assets with real previews
-- keep README screenshots up to date
-- verify all public links before sharing
+- never commit secret keys
+- never upload private `.env` files
+- replace any placeholder links
+- add a proper license
+- add preview screenshots
+- keep branding consistent
+- remove unused dependencies if you want a cleaner public repo impression
 
 ---
 
-## 👨‍💻 About the Developer
-
-This repository is associated with **lostingness**.
-
-Public profile positioning:
-
-- Full-Stack Developer
-- JavaScript ecosystem + Python focus
-- APIs, dashboards, bots, and scalable platforms
-- modern web product builder
-
-You can replace this section with your exact public bio, founder profile, or brand identity.
-
----
-
-## 🤝 Connect
+## Connect
 
 <p>
   <a href="https://github.com/lostingness"><img src="https://img.shields.io/badge/GitHub-lostingness-181717?style=for-the-badge&logo=github" alt="GitHub" /></a>
-  <a href="https://fyoiaai.vercel.app"><img src="https://img.shields.io/badge/Live%20Demo-Open%20Project-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
   <a href="https://lostingness.site"><img src="https://img.shields.io/badge/Website-Visit%20Site-111827?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website" /></a>
-  <a href="https://www.instagram.com/lostingness"><img src="https://img.shields.io/badge/Instagram-@lostingness-E4405F?style=for-the-badge&logo=instagram" alt="Instagram" /></a>
+  <a href="https://www.instagram.com/lostingness"><img src="https://img.shields.io/badge/Instagram-@lostingness-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" /></a>
 </p>
 
 ---
 
-## 📄 License
+## About the Developer
 
-Choose one depending on your goal:
+This repository is associated with **lostingness**.
+
+Public profile positioning can be presented as:
+
+- Full-stack developer
+- modern frontend + product UI builder
+- JavaScript / TypeScript ecosystem focused
+- builder of bots, dashboards, APIs, and scalable web experiences
+
+You can replace this section with your exact public intro, company name, or personal brand positioning.
+
+---
+
+## License
+
+Choose the one that fits your goal best:
 
 ```text
 MIT License
@@ -306,9 +362,9 @@ All Rights Reserved © 2026
 
 ---
 
-## ⭐ Support
+## Star the Repo
 
-If you like this project, consider supporting it:
+If you like this project, consider giving it a star.
 
 ```bash
 ⭐ Star this repo if you found it useful
