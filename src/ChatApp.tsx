@@ -10,6 +10,37 @@ import { cn } from './lib/utils';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+// Logo Component from LandingPage to maintain branding consistency
+const Logo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path 
+      d="
+        M 18 80
+        L 38 20
+        A 4 4 0 0 1 42 16
+        L 58 16
+        A 4 4 0 0 1 62 20
+        L 62 44
+        A 4 4 0 0 0 66 48
+        L 76 48
+        A 4 4 0 0 1 80 52
+        L 80 76
+        A 4 4 0 0 1 76 80
+        L 56 80
+        A 2 2 0 0 1 54 78
+        L 54 62
+        C 54 52, 48 48, 42 48
+        L 32 78
+        A 2 2 0 0 1 30 80
+        Z
+      " 
+      stroke="currentColor"
+      strokeWidth="4"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 // Models configuration
 const textModels = [
   { id: 'openai/gpt-oss-120b', name: 'FYOIA-V1', description: 'General purpose default' },
@@ -170,7 +201,8 @@ export default function ChatApp() {
 
     try {
       if (mode === 'chat') {
-        const res = await fetch('https://my.lostingness.site/ani.php', {
+        // Now using our local express proxy to bypass CORS and properly handle the request
+        const res = await fetch('/api/groq/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -250,12 +282,16 @@ export default function ChatApp() {
   };
 
   return (
-    <div className="flex h-screen bg-[#050505] text-foreground font-sans overflow-hidden pattern-bg">
-      {/* Background Effect */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-blue-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] bg-purple-500/10 rounded-full blur-[120px]" />
+    <div className="flex h-screen bg-background text-foreground selection:bg-foreground selection:text-background font-sans font-normal overflow-hidden relative">
+      {/* Global Background Ambient Blur Orbs - matched to LandingPage */}
+      <div className="fixed inset-0 z-[0] pointer-events-none overflow-hidden">
+        <div className="absolute top-[10%] left-[10%] w-[500px] h-[500px] bg-blue-500/[0.03] rounded-full blur-[100px]" />
+        <div className="absolute top-[40%] right-[10%] w-[600px] h-[600px] bg-purple-500/[0.04] rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[30%] w-[700px] h-[700px] bg-blue-500/[0.03] rounded-full blur-[150px]" />
       </div>
+      
+      {/* Subtle Grid Pattern Overlay - matched to LandingPage */}
+      <div className="fixed inset-0 z-[1] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNykiLz48L3N2Zz4=')] opacity-50" />
 
       {/* Sidebar Overlay (Mobile) */}
       <AnimatePresence>
@@ -276,15 +312,15 @@ export default function ChatApp() {
         animate={{ x: sidebarOpen ? 0 : -300 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         className={cn(
-          "fixed md:relative z-50 h-full w-[280px] flex flex-col liquid-glass border-r border-white/5",
+          "fixed md:relative z-50 h-full w-[280px] flex flex-col liquid-glass border-r border-white/5 bg-background/80 backdrop-blur-3xl shadow-2xl",
           "md:translate-x-0" // Reset transform on desktop if we were using classes for it, but motion handles it
         )}
         style={{ marginLeft: sidebarOpen ? 0 : window.innerWidth >= 768 ? -280 : 0 }}
       >
         <div className="p-4 flex items-center justify-between border-b border-white/5">
-          <div className="flex items-center gap-2">
-             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center font-serif italic text-white text-lg font-bold">F</div>
-             <span className="font-serif italic text-[20px]">FyoiaAi</span>
+          <div className="flex items-center gap-[8px] pl-1">
+            <Logo className="w-6 h-6 text-foreground" />
+            <span className="font-serif italic font-normal text-[20px] tracking-[-0.5px]">FyoiaAi</span>
           </div>
           <button onClick={() => setSidebarOpen(false)} className="md:hidden text-muted-foreground hover:text-white p-2">
             <X className="w-5 h-5" />
@@ -334,10 +370,10 @@ export default function ChatApp() {
       </motion.aside>
 
       {/* Main Chat Area */}
-      <main className="flex-1 flex flex-col h-full relative z-10 min-w-0">
+      <main className="flex-1 flex flex-col h-full relative z-10 min-w-0 bg-transparent">
         
         {/* Header */}
-        <header className="h-[60px] md:h-[70px] flex items-center justify-between px-4 sticky top-0 border-b border-white/5 liquid-glass z-20">
+        <header className="h-[60px] md:h-[70px] flex items-center justify-between px-3 md:px-4 sticky top-0 border-b border-white/5 bg-background/80 backdrop-blur-2xl z-20">
           <div className="flex items-center gap-3">
             {!sidebarOpen && (
               <button 
@@ -349,24 +385,24 @@ export default function ChatApp() {
             )}
             
             {/* Mode Selector */}
-            <div className="flex items-center p-1 bg-black/40 rounded-xl border border-white/10 shadow-inner">
+            <div className="flex items-center p-1 bg-white/[0.03] rounded-[14px] border border-white/10 shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)] overflow-x-auto hide-scrollbar max-w-[200px] sm:max-w-none">
               <button 
                 onClick={() => setMode('chat')}
-                className={cn("px-3 py-1.5 md:px-4 text-[13px] md:text-sm rounded-lg flex items-center gap-2 transition-all font-medium", mode === 'chat' ? 'bg-white/15 text-white shadow-sm' : 'text-muted-foreground hover:text-white')}
+                className={cn("px-2.5 sm:px-4 py-1.5 sm:py-1.5 text-[12px] sm:text-sm rounded-[10px] flex items-center gap-1.5 sm:gap-2 transition-all font-medium whitespace-nowrap", mode === 'chat' ? 'bg-white/15 text-white shadow-[0_2px_10px_rgba(0,0,0,0.2)]' : 'text-muted-foreground hover:text-white')}
               >
-                <MessageSquare className="w-4 h-4" /> <span className="hidden sm:inline">AI Chat</span>
+                <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> <span className="hidden sm:inline">AI Chat</span><span className="sm:hidden">Chat</span>
               </button>
               <button 
                 onClick={() => setMode('image-gen')}
-                className={cn("px-3 py-1.5 md:px-4 text-[13px] md:text-sm rounded-lg flex items-center gap-2 transition-all font-medium", mode === 'image-gen' ? 'bg-white/15 text-white shadow-sm' : 'text-muted-foreground hover:text-white')}
+                className={cn("px-2.5 sm:px-4 py-1.5 sm:py-1.5 text-[12px] sm:text-sm rounded-[10px] flex items-center gap-1.5 sm:gap-2 transition-all font-medium whitespace-nowrap", mode === 'image-gen' ? 'bg-white/15 text-white shadow-[0_2px_10px_rgba(0,0,0,0.2)]' : 'text-muted-foreground hover:text-white')}
               >
-                <ImageIcon className="w-4 h-4" /> <span className="hidden sm:inline">Image Gen</span>
+                <ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> <span className="hidden sm:inline">Image Gen</span><span className="sm:hidden">Image</span>
               </button>
               <button 
                 onClick={() => setMode('video-gen')}
-                className={cn("px-3 py-1.5 md:px-4 text-[13px] md:text-sm rounded-lg flex items-center gap-2 transition-all font-medium", mode === 'video-gen' ? 'bg-white/15 text-white shadow-sm' : 'text-muted-foreground hover:text-white')}
+                className={cn("px-2.5 sm:px-4 py-1.5 sm:py-1.5 text-[12px] sm:text-sm rounded-[10px] flex items-center gap-1.5 sm:gap-2 transition-all font-medium whitespace-nowrap", mode === 'video-gen' ? 'bg-white/15 text-white shadow-[0_2px_10px_rgba(0,0,0,0.2)]' : 'text-muted-foreground hover:text-white')}
               >
-                <Video className="w-4 h-4" /> <span className="hidden sm:inline">Video Gen</span>
+                <Video className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> <span className="hidden sm:inline">Video Gen</span><span className="sm:hidden">Video</span>
               </button>
             </div>
           </div>
@@ -382,39 +418,50 @@ export default function ChatApp() {
             <div className="relative">
               <button 
                 onClick={() => setModelDropdownOpen(!modelDropdownOpen)}
-                className="flex items-center gap-2 liquid-glass border border-white/10 px-3 py-1.5 rounded-full text-[13px] font-medium hover:bg-white/10 transition-colors shadow-[0_0_10px_rgba(255,255,255,0.02)]"
+                className="flex items-center gap-1 sm:gap-2 liquid-glass border border-white/10 px-2 sm:px-3 py-1.5 rounded-full text-[12px] sm:text-[13px] font-medium hover:bg-white/10 transition-colors shadow-[0_0_10px_rgba(255,255,255,0.02)]"
               >
-                {currentModelsList().find(m => m.id === selectedModel)?.name || 'Select Model'}
-                <ChevronDown className="w-4 h-4" />
+                <span className="max-w-[70px] sm:max-w-[150px] truncate">{currentModelsList().find(m => m.id === selectedModel)?.name || 'Select Model'}</span>
+                <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               </button>
 
               <AnimatePresence>
                 {modelDropdownOpen && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 mt-2 w-[280px] bg-[#111] border border-white/10 rounded-2xl p-2 shadow-2xl z-50 liquid-glass"
-                  >
-                    {currentModelsList().map(m => (
-                      <button
-                        key={m.id}
-                        onClick={() => { setSelectedModel(m.id); setModelDropdownOpen(false); }}
-                        className={cn(
-                          "w-full text-left px-3 py-2.5 rounded-xl text-sm flex items-center justify-between transition-colors",
-                          selectedModel === m.id ? "bg-white/10 text-white" : "text-muted-foreground hover:bg-white/5 hover:text-white"
-                        )}
-                      >
-                        <div className="flex flex-col gap-0.5">
-                          <span className="font-semibold">{m.name}</span>
-                          {'description' in m && (
-                            <span className="text-[11px] opacity-70">{m.description}</span>
+                  <>
+                    {/* Invisible overlay to close dropdown on outside click */}
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      onClick={() => setModelDropdownOpen(false)}
+                      className="fixed inset-0 z-40 bg-transparent"
+                    />
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ duration: 0.2, type: "spring", stiffness: 300, damping: 25 }}
+                      className="absolute right-0 sm:left-1/2 sm:-translate-x-1/2 mt-2 w-[250px] md:w-[280px] bg-background/90 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 shadow-2xl z-50 liquid-glass origin-top-right sm:origin-top"
+                    >
+                      {currentModelsList().map(m => (
+                        <button
+                          key={m.id}
+                          onClick={() => { setSelectedModel(m.id); setModelDropdownOpen(false); }}
+                          className={cn(
+                            "w-full text-left px-3 py-2.5 rounded-xl text-sm flex items-center justify-between transition-colors",
+                            selectedModel === m.id ? "bg-white/10 text-foreground" : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                           )}
-                        </div>
-                        {selectedModel === m.id && <Check className="w-4 h-4 text-blue-400" />}
-                      </button>
-                    ))}
-                  </motion.div>
+                        >
+                          <div className="flex flex-col gap-0.5">
+                            <span className="font-semibold text-[13px] md:text-sm">{m.name}</span>
+                            {'description' in m && (
+                              <span className="text-[10px] md:text-[11px] opacity-70 leading-tight">{m.description}</span>
+                            )}
+                          </div>
+                          {selectedModel === m.id && <Check className="w-4 h-4 text-blue-400 shrink-0 ml-2" />}
+                        </button>
+                      ))}
+                    </motion.div>
+                  </>
                 )}
               </AnimatePresence>
             </div>
@@ -424,9 +471,9 @@ export default function ChatApp() {
         {/* Messages List */}
         <div className="flex-1 overflow-y-auto px-4 py-6 md:px-8 space-y-6 md:space-y-8 custom-scrollbar scroll-smooth">
           {messages.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-center px-4">
-              <div className="w-16 h-16 rounded-3xl liquid-glass border border-white/10 flex items-center justify-center mb-6 shadow-2xl">
-                <Bot className="w-8 h-8 text-white/80" />
+            <div className="h-full flex flex-col items-center justify-center text-center px-4 relative z-10">
+              <div className="w-16 h-16 rounded-3xl bg-white/[0.03] border border-white/10 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(255,255,255,0.05)] backdrop-blur-xl">
+                <Logo className="w-8 h-8 text-foreground" />
               </div>
               <h2 className="text-3xl font-medium tracking-tight mb-2">How can I help you today?</h2>
               <p className="text-muted-foreground max-w-md">Ask anything, generate images, write code, or just chat with the most advanced AI models.</p>
@@ -455,7 +502,7 @@ export default function ChatApp() {
                     {msg.role === 'assistant' && (
                        <div className="flex items-center gap-3 mb-2">
                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shrink-0">
-                           <Bot className="w-4 h-4 text-white" />
+                           <Logo className="w-4 h-4 text-white" />
                          </div>
                          <span className="font-semibold text-sm">FyoiaAi</span>
                        </div>
@@ -493,7 +540,7 @@ export default function ChatApp() {
                   <div className="flex flex-col gap-2 max-w-[85%] md:max-w-[75%]">
                      <div className="flex items-center gap-3 mb-1">
                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shrink-0">
-                         <Bot className="w-4 h-4 text-white" />
+                         <Logo className="w-4 h-4 text-white" />
                        </div>
                        <span className="font-semibold text-sm">FyoiaAi</span>
                      </div>
